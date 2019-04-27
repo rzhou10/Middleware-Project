@@ -41,7 +41,7 @@ public class Store extends UnicastRemoteObject implements RMIInterface{
 
     public static void main(String[] args){
         try{
-            Naming.rebind("//localhost:3000", new Store(initializeList()));
+            Naming.rebind("//155.246.140.1/MyBookstore", new Store(initializeList()));
             System.err.println("Server ready");
         }
         catch (Exception e){

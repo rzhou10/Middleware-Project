@@ -1,8 +1,7 @@
 import java.net.*;
 import java.rmi.*;
 import java.util.*;
-
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class Customer{
 
@@ -10,7 +9,7 @@ public class Customer{
 
     public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 
-        look_up = (RMIInterface)Naming.lookup("//localhost:3000");
+        look_up = (RMIInterface)Naming.lookup("//localhost/MyBookstore");
 
         boolean findmore;
 
