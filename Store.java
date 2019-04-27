@@ -1,5 +1,6 @@
 import java.util.*;
 import java.rmi.*;
+import java.rmi.server.*;
 
 public class Store extends UnicastRemoteObject implements RMIInterface{
 
@@ -11,14 +12,18 @@ public class Store extends UnicastRemoteObject implements RMIInterface{
         this.bookList = list;
     }
 
-    // The client sends a Book object with the isbn information on it 
+    // The client sends a Book object with the isbn info on it 
     
-    // With this method the server searches in the List bookList 
-    // for any book that has that isbn and returns the whole object
+    // The server searches in bookList for any book that has that the isbn
     @Override
     public Book findBook(Book book) throws RemoteException{
-        Predicate<Book> predicate = x -> x.getIsbn().equals(book.getIsbn());
-        return bookList.stream().filter(predicate).findFirst().get();
+        Book returnBook = null;
+        for (Book specificBook : bookList){
+            if (specificBook.getIsbn().equals(book.getIsbn())){
+                returnBook = specificBook;
+            }
+        }
+        return returnBook;
     }
 
     @Override
@@ -28,15 +33,15 @@ public class Store extends UnicastRemoteObject implements RMIInterface{
 
     private static List<Book> initializeList(){
         List<Book> list = new ArrayList<>();
-        list.add(new Book("Example Book 1", "978-0596009205", 10.00));
-        list.add(new Book("Example Book 2", "978-0596007737", 11.00));
-        list.add(new Book("Example Book 3", "978-0071808552", 12.00));
+        list.add(new Book("Example Book 1", "123", 10.00));
+        list.add(new Book("Example Book 2", "456", 11.00));
+        list.add(new Book("Example Book 3", "789", 12.00));
         return list;
     }
 
     public static void main(String[] args){
         try{
-            Naming.rebind("//localhost/Store", new Store(initializeList()));
+            Naming.rebind("//localhost:3000", new Store(initializeList()));
             System.err.println("Server ready");
         }
         catch (Exception e){

@@ -10,7 +10,7 @@ public class Customer{
 
     public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 
-        look_up = (RMIInterface)Naming.lookup("//localhost/MyBookstore");
+        look_up = (RMIInterface)Naming.lookup("//localhost:3000");
 
         boolean findmore;
 
@@ -48,7 +48,6 @@ public class Customer{
                 default:
                     System.exit(0);
                     break;
-
             }
             findmore = (JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Exit",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION);
